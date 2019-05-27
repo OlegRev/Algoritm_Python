@@ -6,9 +6,9 @@ n = int(input("введите число(n)\n "
               "a(i), a(i+1)= a(i)/(-2), a(i+2) = a(i+1)/(-2)... : "))
 a = 1
 enumerator = 0
-sum = 0
+summa = 0
 while enumerator != n:
-    sum += a
+    summa += a
     a = a/(-2)
     enumerator +=1
-print (f'Сумма {n}-элементов равна :{sum}')
+print (f'Сумма {n}-элементов равна :{summa}')
