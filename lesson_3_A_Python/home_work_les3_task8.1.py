@@ -4,13 +4,13 @@
 # каждой строки и записывать ее в последнюю ячейку строки.
 # В конце следует вывести полученную матрицу.
 import random
-matrix = [[int(input(f'Введите натуральные числа  {j}-ая строка {i} - ый элемент')) for i in range(3)] for j in range(5)]
+matrix = [[int(input('Введите натуральные числа')) for _ in range(4)] for _ in range(4)]
 
 for line in matrix:
+    line += [random.randint(0,99)]
     sum_line = 0
-    for idx, item in enumerate(line):
+    for i, item in enumerate(line):
         sum_line += item
-        print(f'{item:>4}', end='')
+        print(f'{item:>5}', end='')
 
     print(f'   |сумма элементов строки = {sum_line}')
-
