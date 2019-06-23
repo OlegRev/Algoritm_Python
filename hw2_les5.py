@@ -5,7 +5,9 @@
 from collections import deque
 
 def digit_hex(d):
-    """Замена литерал в данной очереди на значения в 10-ой системе счисления"""
+    """
+    Замена литерал в данной очереди на значения в 10-ой системе счисления
+    """
     for idx, item in enumerate(d):
         if item == 'A':
             d[idx] = 10
@@ -21,13 +23,19 @@ def digit_hex(d):
             d[idx] = 15
 
 def hex_dec(d,a):
-    """Преобразование из 16-ричной системы счисления в 10-ичную для очереди и получении суммы по всем элементам"""
+    """
+    Преобразование из 16-ричной системы счисления
+    в 10-ичную для очереди и получении суммы по всем элементам
+    """
     for i in range(len(d)):
         a.append(int(d[i])*16**i)
     return sum([i for i in a])
-                                                                                                                         #(digit_hex() и hex_dec()) - преобразование из 16- рично1 в 10-ую систему с выходом суммы
+
 def dec_hex(d):
-    """Преобразование числа в 10-ой системе счисления в число 16-ричной системы счисления"""
+    """
+    Преобразование числа в 10-ой системе счисления
+    в число 16-ричной системы счисления
+    """
     alphabet = "0123456789ABCDEF"
     n = int(d)
     if n < 16:
@@ -35,36 +43,34 @@ def dec_hex(d):
     else:
         return dec_hex(n // 16) + alphabet[n % 16]
 
-digital_1 = deque(input('введите первое число').upper())                                                                 # ввод первого числа и перевод его в верхний регистр
-#print(digital_1)
-digital_2 = deque(input('введите второе число').upper())                                                                 # ввод второго числа и перевод его в верхний регистр
-#print(digital_2)
-sumbol = input('введите символ операции над числами ("+" "*" "-" "/")\n'                                                 # ввод символа операции над числами
-               'для операций "-" и "/" вычесляется абсалютное значение')                                                 #
-res1 = deque()                                                                                                           # инициализация очереди для res1
-res2 = deque()                                                                                                           # инициализация очереди для res2
+digital_1 = deque(input('введите первое число').upper())
+digital_2 = deque(input('введите второе число').upper())
+sumbol = input('введите символ операции над числами ("+" "*" "-" "/")\n'
+               'для операций "-" и "/" вычесляется абсалютное значение')
+res1 = deque()
+res2 = deque()
 
-if len(digital_1) > len(digital_2):                                                                                      # условия несовпадения длины введеных чиселесли длина певого больше чторого то:
-    digital_2.appendleft(0)                                                                                              # добавить "0" слева во второе число
-elif len(digital_1) < len(digital_2):                                                                                    # если первое меньше второго то:
-    digital_1.appendleft(0)                                                                                              # добавить "0" слева в первое число
+if len(digital_1) > len(digital_2):
+    digital_2.appendleft(0)
+elif len(digital_1) < len(digital_2):
+    digital_1.appendleft(0)
 
-digit_hex(digital_1)                                                                                                     # замена литерал в первом числе
-digit_hex(digital_2)                                                                                                     # замена литерал во втором числе
-digital_1.reverse()                                                                                                      # разворот очередей
-digital_2.reverse()                                                                                                      # разворот очередей
+digit_hex(digital_1)
+digit_hex(digital_2)
+digital_1.reverse()
+digital_2.reverse()
 
-hex_dec(digital_1, res1)                                                                                                 # сумирование элементов в очередях и добавление в res1
-hex_dec(digital_2, res2)                                                                                                 # сумирование элементов в очередях и добавление в res2
+hex_dec(digital_1, res1)
+hex_dec(digital_2, res2)
 
-if sumbol == '+':                                                                                                        #
-    print(dec_hex(sum([i for i in res1]) + sum([i for i in res2])))                                                      # вывод для +
-elif sumbol == '*':                                                                                                      #
-    print(dec_hex(sum([i for i in res1]) * sum([i for i in res2])))                                                      # вывод для *
-elif sumbol == '-':                                                                                                      #
-    print(dec_hex(abs(sum([i for i in res1]) - sum([i for i in res2]))))                                                 # вывод для -  абсолютное значение
-elif sumbol == '/':                                                                                                      #
-    print(dec_hex(abs(sum([i for i in res1]) / sum([i for i in res2]))))                                                 # вывод для /  абсолютное значение
+if sumbol == '+':
+    print(dec_hex(sum([i for i in res1]) + sum([i for i in res2])))
+elif sumbol == '*':
+    print(dec_hex(sum([i for i in res1]) * sum([i for i in res2])))
+elif sumbol == '-':
+    print(dec_hex(abs(sum([i for i in res1]) - sum([i for i in res2]))))
+elif sumbol == '/':
+    print(dec_hex(abs(sum([i for i in res1]) / sum([i for i in res2]))))
 
 
 
