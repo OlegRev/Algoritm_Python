@@ -2,44 +2,45 @@
 # числа) для каждого предприятия.. Программа должна определить среднюю прибыль (за год для всех предприятий) и вывести
 # наименования предприятий, чья прибыль выше среднего и отдельно вывести наименования предприятий, чья прибыль ниже
 # среднего.
-from collections import namedtuple, deque                                                                                   # импорт нужных модулей
+from collections import namedtuple, deque
 
-Company = namedtuple('Company', 'name profit_1_quarter profit_2_quarter profit_3_quarter profit_4_quarter ')                # инициализация namedtuple
+Company = namedtuple('Company', 'name_c profit_q total_profit ')
 
-number_of_enterprises = int(input('Введите количество предприятий'))                                                        # модуль ввода количеста предприятий
+i = 1
+average_profit = 0
+enterprises = deque([])
+sorted_companies = deque([None])
+text = 'больше'
 
-i=1                                                                                                                         # инициализация констант :для счетчика
-sum_annual_profit_all_company = 0                                                                                           # для суммы общей прибыли всех компаний
+number_of_enterprises = int(input('Введите количество предприятий'))
 
-enterprises = deque([])                                                                                                     # инициализация deque
-annual_profit_company = deque([])                                                                                           #
+while i < number_of_enterprises + 1:
+    name_c = input(f'Введите наименование {i} компании :')
+    profit_q = [float(input(f'Введите прибыль за {j} квартал {i} компании')) for j in range(1, 5)]
+    total_profit = 0
+    for item in range(len(profit_q)):
+        total_profit += profit_q[item]
 
-while i < number_of_enterprises + 1:                                                                                        # вход в цикл с условием: пока значение{i} меньше"<" количеста предприятий{number_of_enterprises}
+    company_i = Company(name_c=name_c, profit_q=profit_q, total_profit=total_profit)
 
-    company_i = Company(input(f'Введите наименование {i} компании :'),                                                      # модуль ввода дданных о компаниях
-                        float(input(f'Введите прибыль за первый квартал {i} компании :')),                                  #
-                        float(input(f'Введите прибыль за второй квартал {i} компании :')),                                  #
-                        float(input(f'Введите прибыль за третий квартал {i} компании :')),                                  #
-                        float(input(f'Введите прибыль за четвертый квартал {i} компании :')))                               #
+    average_profit += total_profit
+    enterprises.append(company_i)
 
-    annual_profit_company_i = (company_i.profit_1_quarter + company_i.profit_2_quarter                                      # вычесление годовой прыбыли для компании
-                               + company_i.profit_3_quarter + company_i.profit_4_quarter)                                   #
+    if i == number_of_enterprises:
+        average_profit = average_profit / number_of_enterprises
+    i += 1
 
-    annual_profit_company.append(annual_profit_company_i)                                                                   # добавление годовой прыбыли компании в "annual_profit_company = deque([])"
+for co in enterprises:
+    if co.total_profit > average_profit:
+        sorted_companies.appendleft(co)
+    elif co.total_profit < average_profit:
+        sorted_companies.append(co)
 
-    enterprises.append(company_i)                                                                                           # добавление экземпляра компании в "enterprises = deque([])"
-
-    sum_annual_profit_all_company += annual_profit_company_i                                                                # суммирование средне-квартальной прибыли всех компаний
-
-    i += 1                                                                                                                  # счетчик
-
-for idx, annual_profit_company_i in enumerate(annual_profit_company):                                                       # модуль условий вывода компаний:
-    if annual_profit_company_i > sum_annual_profit_all_company/number_of_enterprises:                                       # если годовая прибыль компании больше средне-годовой прибыли среди всех компаний
-        print(f'У компании {enterprises[idx].name} годовая прибыль ВЫШЕ :) среднего, среди введенных компаний')             # то вывести наименование этой компании
-    else:                                                                                                                   # иначе
-        print(f'У компании {enterprises[idx].name} годовая прибыль ниже :( среднего, среди введенных компаний')             # вывести наименование компаний с годовой прибылью меньше и равной средне-годовой прибыли среди компаний
-
-
+for co in sorted_companies:
+    if co is None:
+        text = 'меньше'
+    else:
+        print(f' Компания {co.name_c} заработала {text}, чем средняя прибыль - {average_profit}')
 
 
 
